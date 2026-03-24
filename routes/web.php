@@ -9,8 +9,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdministrateurController;
 use App\Http\Controllers\HomeController;
 
-// Welcome Route
-Route::get('/', [HomeController::class, 'index'])->name('welcome');
+// Home routes
+Route::middleware('auth')->get('/', function () {
+    return redirect()->route('dashboard');
+});
+
+Route::middleware('guest')->get('/', [HomeController::class, 'index'])->name('welcome');
 
 // Authentication Routes
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
