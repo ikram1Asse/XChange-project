@@ -36,17 +36,21 @@
                         <p class="text-justify">{{ $annonce->description }}</p>
                     </div>
 
-                    <div class="mt-4">
-                        <a href="{{ route('annonces.edit', $annonce) }}" class="btn btn-warning">Modifier</a>
-                        <form action="{{ route('annonces.destroy', $annonce) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" 
-                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')">
-                                Supprimer
-                            </button>
-                        </form>
-                    </div>
+                    @auth
+                        @if(Auth::id() == $annonce->expediteur)
+                            <div class="mt-4">
+                                <a href="{{ route('annonces.edit', $annonce) }}" class="btn btn-warning">Modifier</a>
+                                <form action="{{ route('annonces.destroy', $annonce) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" 
+                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
+                    @endauth
                 </div>
             </div>
         </div>
